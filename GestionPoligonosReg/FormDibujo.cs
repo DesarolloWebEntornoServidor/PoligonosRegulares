@@ -29,6 +29,10 @@ namespace GestionPoligonosReg
 
         }
 
+        Graphics grafico;
+        int radio = 0;
+        double angBase = 0;
+        Color auxColor;
 
         private void rbNegro_CheckedChanged(object sender, EventArgs e)
         {
@@ -52,8 +56,6 @@ namespace GestionPoligonosReg
 
             cbGrosor.SelectedIndex = 2;
         }
-
-
 
         private void panelDibujo_MouseClick(object sender, MouseEventArgs e)
         {
@@ -80,11 +82,6 @@ namespace GestionPoligonosReg
 
         }
 
-        Graphics grafico;
-        int radio = 0;
-        double angBase = 0;
-        Color auxColor;
-
         private void btnDibujar_Click(object sender, EventArgs e)
         {
             Point[] puntos = new Point[(int)nudNumLados.Value];
@@ -104,7 +101,7 @@ namespace GestionPoligonosReg
                 int x = xCentro + (int)(radio * Math.Cos((trackGiro.Value * Math.PI / 180) + i * angBase));
                 int y = yCentro + (int)(radio * Math.Sin((trackGiro.Value * Math.PI / 180) + i * angBase));
 
-                puntos[i] = new Point(x,y);
+                puntos[i] = new Point(x, y);
 
             }
 
@@ -138,8 +135,6 @@ namespace GestionPoligonosReg
 
             }
 
-
-
             Pen pen = new Pen(lbColor.BackColor, (float)(cbGrosor.SelectedItem));
 
             grafico.DrawPolygon(pen, puntos);
@@ -148,37 +143,59 @@ namespace GestionPoligonosReg
             {
                 for (int j = 0; j < nudNumLados.Value; j++)
                 {
-                    grafico.DrawLine(pen,puntos[i], puntos[j]);
+                    grafico.DrawLine(pen, puntos[i], puntos[j]);
                 }
 
             }
-
-
         }
 
         private void txtRadio_TextChanged(object sender, EventArgs e)
         {
 
-            if (txtRadio.Text != "")
+            if (txtRadio.Text != "" && txtRadio.Text != "-")
             {
                 if (Convert.ToInt32(txtRadio.Text) > 250)
                 {
                     MessageBox.Show("Será fijado el valor máximo permitido ", "Erro, Valor mayor que el permitido", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     txtRadio.Text = "250";
-
                 }
 
                 trackRadio.Value = Convert.ToInt32(txtRadio.Text);
+            }
+            else
+            {
+                if (txtRadio.Text == "-")
+                    MessageBox.Show("Será fijado el valor mínimo permitido ", "Erro, Valor negativo no está permitido", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-            } else
                 txtRadio.Text = "0";
+            }
 
+        }
+
+        private void txtGiro_TextChanged(object sender, EventArgs e)
+        {
+            if (txtGiro.Text != "" && txtGiro.Text != "-")
+            {
+                if (Convert.ToInt32(txtGiro.Text) > 90)
+                {
+                    MessageBox.Show("Será fijado el valor máximo permitido ", "Erro, Valor mayor que el permitido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    txtGiro.Text = "90";
+                }
+
+                trackGiro.Value = Convert.ToInt32(txtGiro.Text);
+            }
+            else
+            {
+                if (txtGiro.Text == "-")
+                    MessageBox.Show("Será fijado el valor mínimo permitido ", "Erro, Valor negativo no está permitido", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                txtGiro.Text = "0";
+            }
         }
 
         private void trackRadio_Scroll(object sender, EventArgs e)
         {
             txtRadio.Text = trackRadio.Value.ToString();
-
         }
 
         private void btnRellenar_Click(object sender, EventArgs e)
@@ -193,8 +210,6 @@ namespace GestionPoligonosReg
             int yCentro = 500 - trackY.Value;
 
             angBase = (2 * Math.PI) / (double)nudNumLados.Value;
-
-
 
             for (int i = 0; i < nudNumLados.Value; i++)
             {
@@ -224,24 +239,6 @@ namespace GestionPoligonosReg
                 trackGiro.Value = 0;
             }
 
-        }
-
-        private void txtGiro_TextChanged(object sender, EventArgs e)
-        {
-            if (txtGiro.Text != "")
-            {
-                if (Convert.ToInt32(txtGiro.Text) > 90)
-                {
-                    MessageBox.Show("Será fijado el valor máximo permitido ", "Erro, Valor mayor que el permitido", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    txtGiro.Text = "90";
-
-                }
-
-                trackGiro.Value = Convert.ToInt32(txtGiro.Text);
-
-            }
-            else
-                txtGiro.Text = "0";
         }
 
         private void trackGiro_Scroll(object sender, EventArgs e)
