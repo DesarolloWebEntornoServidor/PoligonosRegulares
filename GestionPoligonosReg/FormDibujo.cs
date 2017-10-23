@@ -131,8 +131,8 @@ namespace GestionPoligonosReg
 
             for (int i = 0; i < nudNumLados.Value; i++)
             {
-                int x = xCentro + (int)(radio * Math.Cos(i * angBase));
-                int y = yCentro + (int)(radio * Math.Sin(i * angBase));
+                int x = xCentro + (int)(radio * Math.Cos((trackGiro.Value * Math.PI / 180) + i * angBase));
+                int y = yCentro + (int)(radio * Math.Sin((trackGiro.Value * Math.PI / 180) + i * angBase));
 
                 puntos[i] = new Point(x, y);
 
@@ -198,8 +198,8 @@ namespace GestionPoligonosReg
 
             for (int i = 0; i < nudNumLados.Value; i++)
             {
-                int x = xCentro + (int)(radio * Math.Cos(i * angBase));
-                int y = yCentro + (int)(radio * Math.Sin(i * angBase));
+                int x = xCentro + (int)(radio * Math.Cos((trackGiro.Value * Math.PI / 180) + i * angBase));
+                int y = yCentro + (int)(radio * Math.Sin((trackGiro.Value * Math.PI / 180) + i * angBase));
 
                 puntos[i] = new Point(x, y);
 
